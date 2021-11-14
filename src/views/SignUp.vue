@@ -87,26 +87,84 @@
 </template>
 
 <script>
+import authorizationAPI from './../apis/authorization'
+import { Toast } from './../utils/helpers'
+
 export default {
+  name: 'SignUp',
   data () {
     return {
       name: '',
       email: '',
       password: '',
-      passwordCheck: ''
+      passwordCheck: '',
+      isProcessing: false,
     }
   },
   methods: {
-    handleSubmit () {
-      const data = JSON.stringify({
+    async handleSubmit () {
+      try {
+        if (!this.name) {
+          Toast.fire({
+            icon: 'warning',
+            title: '請輸入名稱',
+          })
+          return
+        } else if (!this.email) {
+          Toast.fire({
+            icon: 'warning',
+            title: '請輸入信箱',
+          })
+          return
+        } else if (!this.password) {
+          Toast.fire({
+            icon: 'warning',
+            title: '請輸入密碼',
+          })
+          return
+        } else if (!this.passwordCheck) {
+          Toast.fire({
+            icon: 'warning',
+            title: '請輸入密碼確認',
+          })
+          return
+        } else if (this.password !== this.passwordCheck) {
+          Toast.fire({
+            icon: 'warning',
+            title: '密碼前後不一致',
+          })
+          return
+        }
+
+        const formData = {
         name: this.name,
         email: this.email,
         password: this.password,
         passwordCheck: this.passwordCheck
-      })
+        }
+        this.isProcessing = true
+        const { data } = await authorizationAPI.signUp(formData)
+        console.log('data', data)
 
-      // TODO: 向後端驗證使用者登入資訊是否合法
-      console.log('data', data)
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+
+        
+        this.$router.push({ name: 'sign-in', params: { register: 'success' } })
+      }catch(error){
+        this.isProcessing = false
+        console.log('error', error)
+
+        Toast.fire({
+          icon: 'warning',
+          title: '無法註冊，請稍候再試',
+        })
+      }
+
+
+
+      
     }
   }
 }

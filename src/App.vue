@@ -13,8 +13,15 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import Navbar from './components/Navbar.vue'
 
 export default {
+  name:'APP',
   components: {
     Navbar
   }
 }
 </script>
+
+<style scoped>
+  main {
+    margin-top: 65px !important;
+  }
+</style>

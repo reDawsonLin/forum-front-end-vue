@@ -21,7 +21,8 @@
 <script>
 import { emptyImageFilter } from "./../utils/mixins";
 export default {
-  mixins: {emptyImageFilter},
+  name: 'UserFollowingsCard',
+  mixins: [emptyImageFilter],
   props: {
     followings: {
       type: Array,

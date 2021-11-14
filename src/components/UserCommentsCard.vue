@@ -5,7 +5,7 @@
       <router-link
         v-for="comment in comments"
         :key="comment.id"
-        :to="{ name: 'user', params: { id: comment.id } }"
+        :to="{ name: 'restaurant', params: { id: comment.Restaurant.id } }"
       >
         <img
           :src="comment.Restaurant.image | emptyImage"
@@ -20,8 +20,10 @@
 
 <script>
 import { emptyImageFilter } from "./../utils/mixins";
+
 export default {
-  mixins: {emptyImageFilter},
+  name: 'UserCommentsCard',
+  mixins: [emptyImageFilter],
   props: {
     comments: {
       type: Array,

@@ -12,9 +12,9 @@
         </h4>
         <p>{{ comment.text }}</p>
         by
-        <a href="#">
+        <router-link :to="{ name: 'user', params: { id: comment.User.id } }">
           {{ comment.User.name }}
-        </a>
+        </router-link>
         at {{ comment.createdAt | fromNow }}
         <hr />
       </div>
@@ -27,6 +27,7 @@ import { fromNowFilter } from './../utils/mixins'
 
 
 export default {
+  name: 'NewestComments',
   mixins: [fromNowFilter],
 
   props: {

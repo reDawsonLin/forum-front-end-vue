@@ -6,3 +6,9 @@
     <router-link to="/admin/users">Users</router-link>
   </div>
 </template>
+
+<script>
+export default {
+  name: 'AdminNav'
+}
+</script>

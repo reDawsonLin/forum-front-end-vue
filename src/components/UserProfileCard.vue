@@ -1,11 +1,11 @@
 <template>
   <div class="card mb-3">
     <div class="row no-gutters">
-      <div class="col-md-4">
+      <div class="col-md-4 d-flex justify-content-center align-items-center">
         <img
-          src="https://i.imgur.com/WMsHuNP.jpeg"
-          width="300px"
-          height="300px"
+          :src="profile.image | emptyImage"
+          width="200px"
+          height="200px"
         />
       </div>
       <div class="col-md-8">
@@ -19,19 +19,17 @@
             <li><strong>{{ profile.followersLength }}</strong> followers (追隨者)</li>
           </ul>
           <p>
-            <template v-if="currentUser.isAdmin">
+            <template v-if="profile.id === currentUser.id">
               <router-link
-              :to="{ name: 'user-edit', params: { id: profile.id } }"
+              :to="{ name: 'user-edit', params: { id: profile.id } }"  class="btn btn-primary"
               >
-              <button class="btn btn-primary">
-                edit
-              </button>
+                Edit
               </router-link>
             </template>
             <template v-else>
               <button
-                v-if="profile.isFollowed"
-                @click.stop.prevent="deleteFollowing"
+                v-if="isFollowed"
+                @click.stop.prevent="deleteFollowing(profile.id)"
                 type="submit"
                 class="btn btn-danger"
               >
@@ -39,7 +37,7 @@
               </button>
               <button
                 v-else
-                @click.stop.prevent="addFollowing"
+                @click.stop.prevent="addFollowing(profile.id)"
                 type="submit"
                 class="btn btn-primary"
               >
@@ -54,43 +52,68 @@
 </template>
 
 <script>
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    name: "root",
-    email: "root@example.com",
-    image: "https://i.imgur.com/58ImzMM.png",
-    isAdmin: true,
-  },
-  isAuthenticated: true,
-};
+import { emptyImageFilter } from './../utils/mixins'
+import userAPI from './../apis/users'
+import { Toast } from './../utils/helpers'
+
+
+
 
 
 export default {
+  name: 'UserProfileCard',
+  mixins: [emptyImageFilter],
   props: {
     initialProfile: {
       type: Object,
       reqiured: true,
+    },
+    currentUser: {
+      type: Object,
+      required: true,
+    },
+    isFollowed: {
+      type: Boolean,
+      required: true
     }
   },
   data() {
     return {
       profile: this.initialProfile,
-      currentUser: dummyUser.currentUser,
     }
   },
   methods: {
-    addFollowing() {
-      this.profile = {
-        ...this.profile,
-        isFollowed: true,
-      };
+    async addFollowing(userId) {
+      try {
+        const { data } = await userAPI.addFollowing({ userId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.$emit('after-add-following')        
+      } catch (error) {
+        console.log('error', error)
+        Toast.fire({
+          icon: 'error',
+          title: '無法加入追蹤，請稍後再試',
+        })
+      }
+
+
+      
     },
-    deleteFollowing() {
-      this.profile = {
-        ...this.profile,
-        isFollowed: false,
-      };
+    async deleteFollowing(userId) {
+      try {
+        const { data } = await userAPI.deleteFollowing({ userId })
+        if (data.status !== 'success') {
+          throw new Error(data.message)
+        }
+        this.$emit('after-delete-following')
+      } catch (error) {
+        Toast.fire({
+          icon: 'error',
+          title: '無法取消追蹤，請稍後再試',
+        })
+      }
     },
   }
 }

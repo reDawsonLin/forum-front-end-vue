@@ -5,7 +5,7 @@
       <router-link
         v-for="favoritedRestaurant in favoritedRestaurants" 
         :key="favoritedRestaurant.id"
-        :to="{ name: 'user', params: { id: favoritedRestaurant.id }}"
+        :to="{ name: 'restaurant', params: { id: favoritedRestaurant.id }}"
       >
         <img
           :src="favoritedRestaurant.image | emptyImage"
@@ -21,7 +21,7 @@
 <script>
 import { emptyImageFilter } from "./../utils/mixins";
 export default {
-  mixins: { emptyImageFilter },
+  mixins: [emptyImageFilter],
   props: {
     favoritedRestaurants: {
       type: Array,

@@ -20,16 +20,11 @@
   </div>
 </template>
 
-<style scoped>
-small {
-  font-size: 10px;
-}
-</style>
-
 <script>
 import { fromNowFilter } from "./../utils/mixins";
 
 export default {
+  name: 'NewestRestaurants',
   mixins: [fromNowFilter],
   props: {
     restaurants: {
@@ -39,3 +34,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+small {
+  font-size: 10px;
+}
+</style>

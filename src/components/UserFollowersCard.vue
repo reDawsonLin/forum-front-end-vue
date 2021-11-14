@@ -15,8 +15,10 @@
 
 <script>
 import { emptyImageFilter } from "./../utils/mixins";
+
 export default {
-  mixins: { emptyImageFilter },
+  name: 'UserFollowersCard',
+  mixins: [ emptyImageFilter ],
   props: {
     followers: {
       type: Array,
