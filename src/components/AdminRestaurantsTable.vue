@@ -71,7 +71,6 @@ export default {
     async fetchRestaurants() {
       try{
         const {data} = await adminAPI.restaurants.get()
-        console.log(data)
 
         this.restaurants = data.restaurants;
         this.isLoading = false
@@ -89,8 +88,8 @@ export default {
         const { data } = await adminAPI.restaurants.delete({
           restaurantId
         })
-        // console.log(data)
-        if (data.status !== 'success') {
+
+if (data.status !== 'success') {
           throw new Error(data.message)
         }
 

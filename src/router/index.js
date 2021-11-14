@@ -139,7 +139,7 @@ router.beforeEach(async (to, from, next) => {
   }
 
 
-  // 不需要驗證 token 的頁面
+  // 不需要驗證 token 的頁面，排除無窮請求回同一頁的情況
   const pathsWithoutAuthentication = ['sign-up', 'sign-in']
 
   // 如果 token 無效且進入需要驗證的頁面則轉址到登入頁

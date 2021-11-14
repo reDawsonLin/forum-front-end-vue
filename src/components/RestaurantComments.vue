@@ -46,7 +46,6 @@ export default {
   },
   methods: {
     handleDeleteButtonClick(commentId) {
-      console.log("handleDeleteButtonClick", commentId);
       this.$emit("after-delete-comment", commentId);
     },
   },

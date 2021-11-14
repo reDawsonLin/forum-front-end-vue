@@ -144,7 +144,6 @@ export default {
         }
         this.isProcessing = true
         const { data } = await authorizationAPI.signUp(formData)
-        console.log('data', data)
 
         if (data.status !== 'success') {
           throw new Error(data.message)

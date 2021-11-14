@@ -86,7 +86,6 @@ export default {
     async addFollowing(userId) {
       try {
         const { data } = await usersAPI.addFollowing({ userId });
-        console.log("data", data);
 
         if (data.status !== "success") {
           throw new Error(data.message);

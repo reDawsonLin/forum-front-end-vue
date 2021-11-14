@@ -61,7 +61,6 @@ export default {
     };
   },
   created() {
-    //根據網址取資料
     const { page = "", categoryId = "" } = this.$route.query; 
     this.fetchRestaurants({ queryPage: page, queryCategoryId: categoryId });
   },

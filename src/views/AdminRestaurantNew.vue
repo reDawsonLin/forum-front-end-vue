@@ -23,7 +23,6 @@ export default {
     async handleAfterSubmit (formData) {
       try {
         this.isProcessing= true
-        // 透過 API 將表單資料送到伺服器
         const {data} = await adminAPI.restaurants.create({
           formData
       })

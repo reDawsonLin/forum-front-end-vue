@@ -46,9 +46,7 @@ import{mapState} from 'vuex'
 
 export default {
 name: 'Navbar',
-created(){
-  console.log('currentUser', this.currentUser)
-},
+
 computed: {
   ...mapState(['currentUser', 'isAuthenticated'])
 },

@@ -149,9 +149,7 @@ export default {
     };
   },
   watch: {
-    initialRestaurant (newValue, oldValue) {
-      console.log(newValue, oldValue)
-      
+    initialRestaurant (newValue) {
       this.restaurant = {
         ...this.restaurant,
         ...newValue
@@ -169,7 +167,6 @@ export default {
     async fetchCategories() {
       try {
       const {data} = await adminAPI.categories.get()
-      console.log(data)
 
       this.categories = data.categories
       this.isLoading = false
